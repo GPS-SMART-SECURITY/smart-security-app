@@ -1,32 +1,21 @@
 package com.isec.gps41.SmartSecurity.payload;
 
+import com.isec.gps41.SmartSecurity.payload.enums.ErrorEnum;
+
 import java.util.Date;
 
 public class ErrorDetails {
     private Date timestamp;
     private String message;
-    private String details;
+    private ErrorEnum errorCode;
 
-    public ErrorDetails(Date timestamp, String message, String details) {
-        this.timestamp = timestamp;
-        this.message = message;
-        this.details = details;
-    }
 
     public ErrorDetails(Date timestamp, String message) {
         this.timestamp = timestamp;
         this.message = message;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public String getDetails() {
-        return details;
+    public void setErrorCode(ErrorEnum errorCode) {
+        this.errorCode = errorCode;
     }
 }
