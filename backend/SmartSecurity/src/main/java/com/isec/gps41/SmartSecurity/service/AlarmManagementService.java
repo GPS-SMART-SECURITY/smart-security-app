@@ -24,34 +24,79 @@ public class AlarmManagementService {
     @Autowired
     JwtTokenProvider tokenProvider;
 
+    @Autowired
+    DivisionService divisionService;
+
+    @Autowired
+    AlarmService alarmService;
 
 
     public List<DivisionDto> desativateAlarms(List<UUID> listDivisionUUID, String token) {
-
-        return new ArrayList<>();
+        Set<Division> divisions;
+        long id = tokenProvider.getIdByToken(token);
+        User u = userService.getUserById(id);
+        divisions = getDivisionsOfUser(listDivisionUUID, u);
+        alarmService.desativateAlarmeIfIsNotAtivate(divisions, u);
+        return divisions.stream().map(DivisionDto::mapToDto).toList();
     }
 
     public List<DivisionDto> activeAlarms(List<UUID> listDivisionUUID, String token) {
-        return null;
+        Set<Division> divisions;
+        long id = tokenProvider.getIdByToken(token);
+        User u = userService.getUserById(id);
+        divisions = getDivisionsOfUser(listDivisionUUID, u);
+        alarmService.activeAlarmsGuard(divisions, u);
+
+        return divisions.stream().map(DivisionDto::mapToDto).toList();
     }
 
     private Set<Division> getDivisionsOfUser(List<UUID> listDivisionUUID, User u){
-        return null;
+        Set<Division> divisions;
+
+        if(u.getRole().equals(ROLES.USER_ROLE)) {
+            divisions = divisionService.matchDivisions(listDivisionUUID, u.getDivisions());
+        }else {
+            divisions = divisionService.getDivisionsByUUID(listDivisionUUID);
+        }
+        divisions = divisionService.filterDivisions(divisions);
+        return divisions;
     }
 
     public RegisterPageable getLogs(Integer pageNumber, Integer pageSize, String order, Date date, String field) {
-        return null;
+        RegisterPageable registerPageable = new RegisterPageable();
+        List<Register> registers = alarmService.getRegisters(pageNumber, pageSize, order, date, field);
+        registerPageable.setRegisters(registers.stream().map(RegisterDto::mapToDto).toList());
+
+        long max = alarmService.getMaxRegisters();
+        registerPageable.setMaxRegisters(max);
+        boolean isLast = ((long) pageSize * (pageNumber + 1)) + pageNumber >= max;
+        registerPageable.setLastPage(isLast);
+        registerPageable.setLength(registers.size());
+
+        return registerPageable;
     }
 
     public void leave(String token) {
-
+        long id = tokenProvider.getIdByToken(token);
+        User u = userService.getUserById(id);
+        alarmService.leave(u);
     }
 
     public void goTo(String token, Optional<UUID> uuids) {
-
+        UUID uuid = uuids.orElseThrow( () -> new ResourcesInvalid("UUID invalid", HttpStatus.BAD_REQUEST));
+        long id = tokenProvider.getIdByToken(token);
+        User u = userService.getUserById(id);
+        Division division = divisionService.getDivisionByUUID(uuid);
+        Set<Division> divisions = divisionService.filterDivisions(Set.of(division));
+        alarmService.goTo(u,divisions);
     }
 
     public List<DivisionDto> activeOrDeactive(List<UUID> uuids, String token) {
-        return null;
+        Set<Division> divisions;
+        long id = tokenProvider.getIdByToken(token);
+        User u = userService.getUserById(id);
+        divisions = getDivisionsOfUser(uuids, u);
+        alarmService.activateOrDeactivate(divisions, u);
+        return divisions.stream().map(DivisionDto::mapToDto).toList();
     }
 }
