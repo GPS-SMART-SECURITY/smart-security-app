@@ -46,7 +46,6 @@ public class TestController {
 
         token = token.substring(7);
         String email = tokenProvider.getEmailByToken(token);
-        //User user = userRepository.findByEmail(email);
 
         User user  = new User();
         user.setName("Daniel Fernandes");

@@ -57,15 +57,4 @@ public class BuildingBOController {
     }
 
 
-    @PostMapping("/activeOrDesative")
-    public ResponseEntity<ResultOfDesativeAtiveAlarms> activeOrDeactive(@RequestHeader("Authorization") String authHeader,
-                                                                    @RequestBody ListUUID listDivisionUUID){
-        String token = authHeader.substring(7);
-
-        //TODO: DO it
-        List<DivisionDto> divisions = alarmService.activeOrDeactive(listDivisionUUID.getUuids(), token);
-        ResultOfDesativeAtiveAlarms result = new ResultOfDesativeAtiveAlarms(true, divisions);
-
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
 }

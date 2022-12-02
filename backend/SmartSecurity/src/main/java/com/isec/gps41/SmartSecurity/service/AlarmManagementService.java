@@ -91,12 +91,4 @@ public class AlarmManagementService {
         alarmService.goTo(u,divisions);
     }
 
-    public List<DivisionDto> activeOrDeactive(List<UUID> uuids, String token) {
-        Set<Division> divisions;
-        long id = tokenProvider.getIdByToken(token);
-        User u = userService.getUserById(id);
-        divisions = getDivisionsOfUser(uuids, u);
-        alarmService.activateOrDeactivate(divisions, u);
-        return divisions.stream().map(DivisionDto::mapToDto).toList();
-    }
 }

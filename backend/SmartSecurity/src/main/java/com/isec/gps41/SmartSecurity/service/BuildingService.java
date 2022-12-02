@@ -84,13 +84,6 @@ public class BuildingService {
     }
 
 
-
-    private void validateToken(String auth){
-        if(auth.length() < 7){
-            throw new InvalidToken("Invalid token", HttpStatus.BAD_REQUEST);
-        }
-    }
-
     public BuildingDetailsRequest getBuildingDetails() {
         BuildingDetailsRequest response = new BuildingDetailsRequest();
         List<Floor> floors = floorRepository.findAll(Sort.by(Sort.Direction.ASC, "number"));

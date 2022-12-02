@@ -151,18 +151,6 @@ public class AlarmService {
         return divisionsToActive;
     }
 
-    public void activateOrDeactivate(Set<Division> divisions, User u) {
-
-        divisions = divisions.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new));
-
-        for (Division division : divisions) {
-            if(division.getAlarm().isOn()){
-                desativateAlarmAdmin(division, u);
-            }else {
-                activeAlarmAdmin(division, u);
-            }
-        }
-    }
 
     private void activeAlarmAdmin(Division division, User u) {
         StateOfAlarm state;
@@ -203,19 +191,6 @@ public class AlarmService {
         alarmRepository.save(division.getAlarm());
     }
 
-    private void desativateAlarmAdmin(Division division, User u) {
-
-        Register register = new Register();
-        //TODO ver isto
-        List<Register> registers = registerRepository.findAllByLeaveAtIsNullAndDivision_Id(division.getId());
-
-        division.getAlarm().setOn(false);
-        alarmRepository.save(division.getAlarm());
-
-        register.setStateOnEntry(StateOfAlarm.DEACTIVATE);
-        register.setUser(u); register.setDivision(division); register.setEntryAt(new Date());
-        registerRepository.save(register);
-    }
 
     /**
      * Get the number max of registers stored.
@@ -230,15 +205,9 @@ public class AlarmService {
         for (Division division : divisions) {
             activeAlarmAdmin(division, u);
         }
-
     }
 
-    public void desativateAlarmsSecurityGuard(Set<Division> divisions, User u) {
-        for (Division division : divisions) {
-            if (division.getAlarm().isOn())
-                desativateAlarmAdmin(division, u);
-        }
-    }
+
 }
 
 
