@@ -15,7 +15,7 @@ import java.util.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "divisions")
-public class Division{
+public class Division implements Comparable<Division>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,4 +69,16 @@ public class Division{
         return result;
     }
 
+    @Override
+    public int compareTo(Division o) {
+        if(type == o.getType()){
+            return 0;
+        } else if (type == TypeDivision.COMMON_AREA) {
+            return 1;
+        }
+        else{
+            return -1;
+        }
+
+    }
 }

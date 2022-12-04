@@ -26,19 +26,5 @@ public class UsersController {
         return new ResponseEntity<>(buildingService.getUserDetails(token), HttpStatus.OK);
     }
 
-    @GetMapping("/leave")
-    public ResponseEntity<String> leave(@RequestHeader("Authorization") String authHeader){
-        String token = authHeader.substring(7);
-        alarmManagementService.leave(token);
-        return new ResponseEntity<>("", HttpStatus.OK);
-    }
-
-    @PostMapping("/goto")
-    public ResponseEntity<String> goTo(@RequestHeader("Authorization") String authHeader,
-                                       @RequestBody ListUUID listDivisionUUID){
-        String token = authHeader.substring(7);
-        alarmManagementService.goTo(token, listDivisionUUID.getUuids().stream().findFirst());
-        return new ResponseEntity<>("", HttpStatus.OK);
-    }
 
 }

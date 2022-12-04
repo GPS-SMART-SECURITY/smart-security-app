@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.isec.gps41.SmartSecurity.controllers.backoffice.UsersBOControllerTest;
+import com.isec.gps41.SmartSecurity.exception.GlobalExceptionHandler;
 import com.isec.gps41.SmartSecurity.repository.DivisionRepository;
 import com.isec.gps41.SmartSecurity.repository.UserRepository;
 import com.isec.gps41.SmartSecurity.security.JwtTokenProvider;
@@ -23,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
-
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = SmartSecurityApplication.class)
@@ -54,6 +55,7 @@ public class AbstractTest {
 
     protected void setUp() {
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        //mvc = MockMvcBuilders.standaloneSetup(new UsersBOControllerTest()).setControllerAdvice(new GlobalExceptionHandler()).build();
     }
 
     protected String mapToJson(Object obj) throws JsonProcessingException {
