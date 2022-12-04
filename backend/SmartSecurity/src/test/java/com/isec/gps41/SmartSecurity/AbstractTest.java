@@ -45,6 +45,9 @@ public class AbstractTest {
     public DivisionService divisionService;
 
     @Autowired
+    public DivisionRepository divisionRepository;
+
+    @Autowired
     public AlarmService alarmService;
 
     @Autowired
