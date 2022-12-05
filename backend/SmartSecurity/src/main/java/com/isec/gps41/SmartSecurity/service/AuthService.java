@@ -3,6 +3,7 @@ package com.isec.gps41.SmartSecurity.service;
 import com.isec.gps41.SmartSecurity.constants.ROLES;
 import com.isec.gps41.SmartSecurity.model.User;
 import com.isec.gps41.SmartSecurity.payload.LoginRequest;
+import com.isec.gps41.SmartSecurity.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +22,9 @@ public class AuthService {
 
     @Autowired
     AuthenticationManager authenticationManager;
+    @Autowired
+    JwtTokenProvider tokenProvider;
+
 
     public User registerUser(LoginRequest request) {
         User user = new User();
@@ -45,6 +49,10 @@ public class AuthService {
 
     public static String encodePassword(String password){
         return new BCryptPasswordEncoder().encode(password);
+    }
+
+    public String generateToken(String email, long id) {
+        return tokenProvider.generateJwtToken(email, id);
     }
 
 }

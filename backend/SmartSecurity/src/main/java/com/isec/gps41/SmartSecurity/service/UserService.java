@@ -110,7 +110,7 @@ public class UserService {
     }
 
     private void checkPasswordRegex(String password) {
-        String regex = "^(?=.\\d)(?=.[!@#$%^&])(?=.[a-z])(?=.*[A-Z]).{6,15}$";
+        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,15}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(password);
 

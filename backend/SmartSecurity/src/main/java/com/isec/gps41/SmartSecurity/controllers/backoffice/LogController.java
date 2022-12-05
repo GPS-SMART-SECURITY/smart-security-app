@@ -28,11 +28,7 @@ public class LogController {
                                         @RequestParam(required = false, name = "pageSize") Integer pageSize,
                                         @RequestParam(required = false, name = "field") String field){
 
-//        @DateTimeFormat(pattern = "yyyy.MM.dd") Date
-//        if(date != null){
-//            String sDate1="31/12/1998";
-//            Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
-//        }
+
         if(pageNumber == null || pageSize == null){
             pageNumber = 0;
             pageSize = 10;

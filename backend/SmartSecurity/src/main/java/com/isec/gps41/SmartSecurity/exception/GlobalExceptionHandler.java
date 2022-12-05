@@ -12,6 +12,17 @@ import java.util.Date;
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+
+
+    @ExceptionHandler(ResourcesInvalid.class)
+    public ResponseEntity<ErrorDetails> resourcesException(ResourcesInvalid exception, WebRequest webRequest){
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage());
+        if (exception.getErrorCode() != null){
+            errorDetails.setErrorCode(exception.getErrorCode());
+        }
+        return new ResponseEntity<>(errorDetails, exception.getStatus());
+    }
+
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<ErrorDetails> apiException(ApiException exception, WebRequest webRequest){
         ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage());

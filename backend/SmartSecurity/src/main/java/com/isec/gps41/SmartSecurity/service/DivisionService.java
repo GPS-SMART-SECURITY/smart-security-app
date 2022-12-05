@@ -29,7 +29,6 @@ public class DivisionService {
         Set<Division> d =  new HashSet<>();//divisions.stream().filter(division -> divisionsUUIDS.contains(division.getUuid())).collect(Collectors.toSet());
         divisions.forEach( division -> {
             for (UUID divisionsUUID : divisionsUUIDS) {
-                System.out.println(division.getUuid().toString() + " -> " + divisionsUUID.toString());
                 if(divisionsUUID.equals(division.getUuid())){
                     d.add(division);
                     break;

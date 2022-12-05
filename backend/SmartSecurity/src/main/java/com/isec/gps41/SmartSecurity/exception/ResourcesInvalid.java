@@ -5,11 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @Getter
 @Setter
 @NoArgsConstructor
-
 public class ResourcesInvalid extends ApiException{
 
     public ResourcesInvalid(String message, HttpStatus status) {

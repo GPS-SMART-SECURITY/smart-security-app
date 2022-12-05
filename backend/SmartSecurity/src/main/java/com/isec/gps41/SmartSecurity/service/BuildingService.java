@@ -78,6 +78,7 @@ public class BuildingService {
     public UserDto updateUser(UserNewRequest userUpdateRequest, UUID uuid) {
         Set<Division> divisions = divisionService.getDivisionsByUUID(userUpdateRequest.getDivisions());
         User user = userService.findUserByUUID(uuid);
+        //divisions = divisionService.filterDivisions(divisions);
 
         userService.update(user, divisions, userUpdateRequest.getUser(), userUpdateRequest.getPassword());
         return UserDto.maptoDto(user);
