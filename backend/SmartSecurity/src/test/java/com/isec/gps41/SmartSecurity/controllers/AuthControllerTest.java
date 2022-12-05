@@ -53,8 +53,54 @@ public class AuthControllerTest extends AbstractTest {
             throw e.getCause();
         }
 
+    }
+    @Test(expected = org.springframework.security.authentication.BadCredentialsException.class)
+    public void doBadLoginWithoutEmail() throws Throwable {
+        String uri = "/auth/login";
+        LoginRequest request = new LoginRequest("", "asd123aaa");
+        String inputJson = super.mapToJson(request);
 
+        try {
+            mvc.perform(MockMvcRequestBuilders.post(uri)
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .content(inputJson)).andReturn();
+        }catch (Exception e){
+            throw e.getCause();
+        }
 
     }
+
+    @Test(expected = org.springframework.security.authentication.BadCredentialsException.class)
+    public void doBadLoginWithoutPassword() throws Throwable {
+        String uri = "/auth/login";
+        LoginRequest request = new LoginRequest("daniel@gmail.com", "");
+        String inputJson = super.mapToJson(request);
+
+        try {
+            mvc.perform(MockMvcRequestBuilders.post(uri)
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .content(inputJson)).andReturn();
+        }catch (Exception e){
+            throw e.getCause();
+        }
+
+    }
+
+    @Test(expected = org.springframework.security.authentication.BadCredentialsException.class)
+    public void doBadLoginWithoutEmailAndPassword() throws Throwable {
+        String uri = "/auth/login";
+        LoginRequest request = new LoginRequest("", "");
+        String inputJson = super.mapToJson(request);
+
+        try {
+            mvc.perform(MockMvcRequestBuilders.post(uri)
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .content(inputJson)).andReturn();
+        }catch (Exception e){
+            throw e.getCause();
+        }
+
+    }
+
 
 }
