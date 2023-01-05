@@ -154,6 +154,10 @@ public class TestController {
         hallway11.setType(TypeDivision.COMMON_AREA);
         hallway11.setName("Hallway 11");
 
+
+        floorRepository.save(groundFloor);
+        floorRepository.save(firstFloor);
+
         entrance = divisionRepository.save(entrance);
         hallway11 = divisionRepository.save(hallway11);
         bathroom01 = divisionRepository.save(bathroom01);
@@ -167,6 +171,7 @@ public class TestController {
         room12 = divisionRepository.save(room12);
         room13 = divisionRepository.save(room13);
         room14 = divisionRepository.save(room14);
+        room15 = divisionRepository.save(room15);
 
         //
         // Set room dependecies
@@ -183,6 +188,7 @@ public class TestController {
         room12.getDivisionsDependsOf().addAll(List.of(hallway01,hallway11, entrance, bathroom01, bathroom11));
         room13.getDivisionsDependsOf().addAll(List.of(hallway01,hallway11, entrance, bathroom01, bathroom11));
         room14.getDivisionsDependsOf().addAll(List.of(hallway01,hallway11, entrance, bathroom01, bathroom11));
+        room15.getDivisionsDependsOf().addAll(List.of(hallway01,hallway11, entrance, bathroom01, bathroom11));
         bathroom11.getDivisionsDependsOf().addAll(List.of( hallway01, hallway11, bathroom01, entrance));
 
         Alarm alarmEntrance  = new Alarm();
@@ -210,6 +216,8 @@ public class TestController {
         alarmRoom13.setOn(true);
         Alarm alarmRoom14 = new Alarm();
         alarmRoom14.setOn(true);
+        Alarm alarmRoom15 = new Alarm();
+        alarmRoom15.setOn(true);
         Alarm alarmBathroom11 = new Alarm();
         alarmBathroom11.setOn(true);
 
@@ -225,6 +233,7 @@ public class TestController {
         alarmRoom12.setName(room12.getName() + " Alarm");
         alarmRoom13.setName(room13.getName() + " Alarm");
         alarmRoom14.setName(room14.getName() + " Alarm");
+        alarmRoom15.setName(room15.getName() + " Alarm");
         alarmBathroom11.setName(bathroom11.getName() + " Alarm");
 
         alarmRepository.save(alarmEntrance);
@@ -239,10 +248,23 @@ public class TestController {
         alarmRepository.save(alarmRoom12);
         alarmRepository.save(alarmRoom13);
         alarmRepository.save(alarmRoom14);
+        alarmRepository.save(alarmRoom15);
         alarmRepository.save(alarmBathroom11);
 
-        floorRepository.save(groundFloor);
-        floorRepository.save(firstFloor);
+        entrance.setAlarm(alarmEntrance);
+        hallway01.setAlarm(alarmHallway01);
+        room01.setAlarm(alarmRoom01);
+        room02.setAlarm(alarmRoom02);
+        room03.setAlarm(alarmRoom03);
+        room04.setAlarm(alarmRoom04);
+        bathroom01.setAlarm(alarmBathroom01);
+        hallway11.setAlarm(alarmHallway11);
+        room11.setAlarm(alarmRoom11);
+        room12.setAlarm(alarmRoom12);
+        room13.setAlarm(alarmRoom13);
+        room14.setAlarm(alarmRoom14);
+        room15.setAlarm(alarmRoom15);
+        bathroom11.setAlarm(alarmBathroom11);
 
         entrance = divisionRepository.save(entrance);
         hallway11 = divisionRepository.save(hallway11);
@@ -257,21 +279,10 @@ public class TestController {
         room12 = divisionRepository.save(room12);
         room13 = divisionRepository.save(room13);
         room14 = divisionRepository.save(room14);
+        room15 = divisionRepository.save(room15);
 
 
-        entrance.setAlarm(alarmEntrance);
-        hallway01.setAlarm(alarmHallway01);
-        room01.setAlarm(alarmRoom01);
-        room02.setAlarm(alarmRoom02);
-        room03.setAlarm(alarmRoom03);
-        room04.setAlarm(alarmRoom04);
-        bathroom01.setAlarm(alarmBathroom01);
-        hallway11.setAlarm(alarmHallway11);
-        room11.setAlarm(alarmRoom11);
-        room12.setAlarm(alarmRoom12);
-        room13.setAlarm(alarmRoom13);
-        room14.setAlarm(alarmRoom14);
-        bathroom11.setAlarm(alarmBathroom11);
+
 
 
 
